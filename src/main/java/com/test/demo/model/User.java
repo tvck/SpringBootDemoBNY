@@ -20,6 +20,7 @@ public class User {
             @JoinColumn(name = "suite", referencedColumnName = "suite"),
             @JoinColumn(name = "city", referencedColumnName = "city"),
             @JoinColumn(name = "zipcode", referencedColumnName = "zipcode")
+
     })
     private Address address;
     @Column
@@ -33,7 +34,6 @@ public class User {
             @JoinColumn(name = "bs", referencedColumnName = "bs")
     })
     private Company company;
-
 
     public int getId() {
         return id;

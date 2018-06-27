@@ -1,12 +1,15 @@
 package com.test.demo.model;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 @Entity
-@Embeddable
+@Table(name="geo")
 public class Geo {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GenericGenerator(name = "gen",strategy = "increment")
+    @GeneratedValue(generator = "gen")
     private int id;
     @Column
     private double lat;
@@ -32,8 +35,8 @@ public class Geo {
     @Override
     public String toString() {
         return "Geo{" +
-                "lat=" + lat +
-                ", lng=" + lng +
+                "lat:" + lat +
+                ", lng:" + lng +
                 '}';
     }
 }

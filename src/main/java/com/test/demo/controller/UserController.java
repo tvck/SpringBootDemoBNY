@@ -2,6 +2,7 @@ package com.test.demo.controller;
 
 import com.test.demo.model.Address;
 import com.test.demo.model.Company;
+import com.test.demo.model.Geo;
 import com.test.demo.model.User;
 import com.test.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +25,11 @@ public class UserController {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    @GetMapping("/{userId}")
+    @GetMapping("/{id}")
     public User getUser(@PathVariable int id){
         //return userRepository.findById(id).map((e)->{return e;}).orElse(null);
-        String sql="SELECT * from users where id="+id;
-        User user=jdbcTemplate.queryForObject(sql, new RowMapper<User>() {
+        String sql="SELECT * from users,geo where users.id=geo.id and users.id="+id;
+        return jdbcTemplate.queryForObject(sql, new RowMapper<User>() {
             @Override
             public User mapRow(ResultSet resultSet, int i) throws SQLException {
                 User user=new User();
@@ -43,6 +44,10 @@ public class UserController {
                 address.setStreet(resultSet.getString("street"));
                 address.setSuite(resultSet.getString("suite"));
                 address.setZipcode(resultSet.getString("zipcode"));
+                Geo geo=new Geo();
+                geo.setLat(resultSet.getDouble("lat"));
+                geo.setLat(resultSet.getDouble("lng"));
+                address.setGeo(geo);
                 user.setAddress(address);
                 Company company=new Company();
                 company.setBs(resultSet.getString("bs"));
@@ -52,7 +57,6 @@ public class UserController {
                 return user;
             }
         });
-        return user;
 
     }
 }

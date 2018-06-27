@@ -1,12 +1,15 @@
 package com.test.demo.model;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name="address")
 public class Address {
     @Id
-    @GeneratedValue
+    @GenericGenerator(name = "gen",strategy = "increment")
+    @GeneratedValue(generator = "gen")
     private int id;
     @Column
     private String street;
@@ -17,7 +20,6 @@ public class Address {
     @Column
     private String zipcode;
     @OneToOne(cascade = CascadeType.ALL)
-    @Embedded
     private Geo geo;
 
     public String getStreet() {

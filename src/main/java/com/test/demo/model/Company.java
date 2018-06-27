@@ -1,12 +1,15 @@
 package com.test.demo.model;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name="company")
 public class Company {
     @Id
-    @GeneratedValue
+    @GenericGenerator(name = "gen",strategy = "increment")
+    @GeneratedValue(generator = "gen")
     private int id;
     @Column
     private String name;
